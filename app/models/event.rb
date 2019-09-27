@@ -4,6 +4,10 @@ class Event < ApplicationRecord
 
   validates :title, presence: true
   before_create :check_validity, :check_completion
+  
+  scope :valid_dates, -> { where('starttime < endtime') }
+  scope :after_startdate, -> (date) { where('starttime >= ?', date) }
+  scope :before_enddate, -> (date) { where('endtime <= ?', date) }
 
   def self.seed_data row
     transaction do 

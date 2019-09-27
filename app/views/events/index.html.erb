@@ -18,8 +18,8 @@
   <tbody>
     <tr>
       <td></td>
-      <td id='start-date'><%= date_field_tag(:datetime_ida) %></td>
-      <td id='end-date'><%= date_field_tag(:datetime_ida) %></td>
+      <td id='start-date' class='range'><%= date_field_tag(:datetime_ida) %><button class='go'>Go</button></td>
+      <td id='end-date' class='range'><%= date_field_tag(:datetime_ida) %><button class='go'>Go</button></td>
       <td></td>
       <td></td>
       <td></td>
@@ -48,7 +48,11 @@
 <%= link_to 'New Event', new_event_path %>
   <script type='text/javascript'>
     $(document).ready(() => {
-      $('td#start-date input').change(() => {
-      })
+      var startdate, enddate
+      $('td button.go').click((e) => {
+        startdate = $('td#start-date input').val();
+        enddate = $('td#end-date input').val();
+        window.location.href=`http://localhost:3000/events?startdate=${startdate}&enddate=${enddate}`
+      });
     })
   </script>

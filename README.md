@@ -1,24 +1,25 @@
-# README
+# Problem Statement
 
-This README would normally document whatever steps are necessary to get the
-application up and running.
+https://docs.google.com/document/d/1yVknzIIKOFOwIOMHB1hKgQiKPq3qr2rMxlSXBPT5HcM/edit#
 
-Things you may want to cover:
+# Solution
 
-* Ruby version
+## Pre-requisites
+```
+* Ruby version > 2
+* RubyGem > 2 
+* Rails > 5
+* Bundler > 1
+* MySQL >= 5.7
+```
 
-* System dependencies
+## Setting up & running the application
 
-* Configuration
+The following will seed the csv files from db/seed_data/<FILENAME>.csv files into MySQL database
 
-* Database creation
+```
+* bundle install
+* rails db:setup
+* rails s
+```
 
-* Database initialization
-
-* How to run the test suite
-
-* Services (job queues, cache servers, search engines, etc.)
-
-* Deployment instructions
-
-* ...

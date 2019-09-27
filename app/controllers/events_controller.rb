@@ -4,7 +4,9 @@ class EventsController < ApplicationController
   # GET /events
   # GET /events.json
   def index
-    @events = Event.all
+    @events = Event.valid_dates
+    @events = @events.after_startdate(params[:startdate]) if params[:startdate].present?
+    @events = @events.before_enddate(params[:enddate]) if params[:enddate].present?
   end
 
   # GET /events/1
