@@ -9,5 +9,9 @@
 require "csv"
 
 CSV.parse(File.read('db/seed_data/users.csv'), headers: true) do |row|
-  User.seed_users(row)
+  User.seed_data(row)
+end
+
+CSV.parse(File.read('db/seed_data/events.csv'), headers: true) do |row|
+  Event.seed_data(row)
 end
