@@ -1,0 +1,2 @@
+class SeedError < ApplicationRecord
+end
