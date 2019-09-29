@@ -2,7 +2,11 @@ class Event < ApplicationRecord
   has_many :rsvps
   has_many :users, through: :rsvps
 
-  validates :title, presence: true
+  validates :title, :starttime, presence: true
+  validates :allday, inclusion: [true, false]
+  validates :endtime, presence: true, if: :timed_event?
+  validates :complete, inclusion: [true, false]
+
   before_create :check_validity, :check_completion
   
   scope :valid_dates, -> { where('starttime < endtime') }
@@ -41,6 +45,10 @@ class Event < ApplicationRecord
   end
 
   def check_completion
-    self.complete = true if !self.allday && Time.now > self.endtime
+    self.complete = true if self.endtime && Time.now > self.endtime
+  end
+
+  def timed_event?
+    !self.allday
   end
 end
