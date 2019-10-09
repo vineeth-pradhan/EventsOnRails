@@ -22,7 +22,7 @@
 }
 
 .dashboard {
-  height: 900px;
+  height: 100vh;
   border-bottom: 2px solid #f5f5f5;
 }
 
@@ -33,4 +33,10 @@
 .dom-content {
   max-height: inherit;
   overflow: auto;
+}
+
+table tbody
+{
+   overflow: auto;
+   height: 100vh;
 }

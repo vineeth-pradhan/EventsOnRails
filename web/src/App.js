@@ -6,7 +6,9 @@ import UsersContent from './DomContent/UsersContent';
 class App extends React.Component {
   constructor() {
     super();
-    this.state = { users: [], events: [] };
+    this.state = { users: [], events: [], eventsUrl: 'http://localhost:3000/events.json', usersUrl: 'http://localhost:3000/users.json' };
+    this.handleEventsChange = this.handleEventsChange.bind(this);
+    // this.handleUsersChange = this.handleUsersChange.bind(this);
   }
 
   handleMenuClick(e, type) {
@@ -15,17 +17,23 @@ class App extends React.Component {
   }
 
   fetchEvents(){
-    fetch('http://localhost:3000/events.json')
+    fetch(this.state.eventsUrl)
       .then(res => { return res.json(); })
       .then(res => { this.setState({ events: res, currentSelectedMenu: 'events' }) })
       .catch(err => { console.log('Something went wrong') });
   }
 
   fetchUsers(){
-    fetch('http://localhost:3000/users.json')
+    fetch(this.state.usersUrl)
       .then(res => { return res.json(); })
       .then(res => { this.setState({ users: res, currentSelectedMenu: 'users' }) })
       .catch(err => { alert('Something went wrong') });
+  }
+
+  async handleEventsChange(obj){
+    var newEventsUrl = this.state.eventsUrl;
+    newEventsUrl += obj.date;
+    await this.setState({ eventsUrl: newEventsUrl });
   }
 
   loadContent(type) {
@@ -35,6 +43,8 @@ class App extends React.Component {
         break;
       case 'users':
         this.fetchUsers();
+        break;
+      default:
         break;
     }
   }
@@ -50,8 +60,8 @@ class App extends React.Component {
 
   render() {
     var currentDom;
-    if(this.state.currentSelectedMenu === 'events') { currentDom = <EventsContent data={ this.state.events }/> }
-    else if(this.state.currentSelectedMenu === 'users'){ currentDom = <UsersContent data={ this.state.users }/> }
+    if(this.state.currentSelectedMenu === 'events') { currentDom = <EventsContent data={ this.state.events } onChange={this.handleEventsChange} /> }
+    else if(this.state.currentSelectedMenu === 'users'){ currentDom = <UsersContent data={ this.state.users } /> }
 
     return (
       <div className="App">
