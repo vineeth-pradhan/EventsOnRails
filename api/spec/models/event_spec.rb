@@ -74,4 +74,96 @@ describe Event, type: :model do
       end
     end
   end
+
+  describe 'Event#validate?' do
+    context 'when only starttime is passed' do
+      context 'with a valid date 20/12/1999' do
+        it 'must return true' do
+          expect(Event.validate? starttime: '1999/12/20').to be_truthy
+          expect(Event.validate? starttime: '20/12/1999').to be_truthy
+        end
+      end
+
+      context 'with 29 Feb which is not a leap year' do
+        it 'must return false' do
+          expect(Event.validate? starttime: '29/02/2001').to be_falsey
+          expect(Event.validate? starttime: '2001/02/29').to be_falsey
+        end
+      end
+
+      context 'with an invalid month' do
+        it 'must return false' do
+          expect(Event.validate? starttime: '1999/99/20').to be_falsey
+          expect(Event.validate? starttime: '20/99/1999').to be_falsey
+        end
+      end
+
+      context 'with an invalid day' do
+        it 'must return false' do
+          expect(Event.validate? starttime: '1999/01/99').to be_falsey
+          expect(Event.validate? starttime: '99/99/1999').to be_falsey
+        end
+      end
+    end
+
+    context 'when only endtime is passed' do
+      context 'with a valid date 20/12/1999' do
+        it 'must return true' do
+          expect(Event.validate? endtime: '1999/12/20').to be_truthy
+          expect(Event.validate? endtime: '20/12/1999').to be_truthy
+        end
+      end
+
+      context 'with 29 Feb which is not a leap year' do
+        it 'must return false' do
+          expect(Event.validate? endtime: '29/02/2001').to be_falsey
+          expect(Event.validate? endtime: '2001/02/29').to be_falsey
+        end
+      end
+
+      context 'with an invalid month' do
+        it 'must return false' do
+          expect(Event.validate? endtime: '1999/99/20').to be_falsey
+          expect(Event.validate? endtime: '20/99/1999').to be_falsey
+        end
+      end
+
+      context 'with an invalid day' do
+        it 'must return false' do
+          expect(Event.validate? endtime: '1999/01/99').to be_falsey
+          expect(Event.validate? endtime: '99/99/1999').to be_falsey
+        end
+      end
+    end
+
+    context 'when both starttime & endtime is passed' do
+      context 'with both dates being valid' do
+        it 'must return true' do
+          expect(Event.validate? starttime: '1999/12/19', endtime: '1999/12/20').to be_truthy
+          expect(Event.validate? starttime: '19/12/1999', endtime: '20/12/1999').to be_truthy
+        end
+      end
+
+      context 'with endtime as 29 Feb which is not a leap year' do
+        it 'must return false' do
+          expect(Event.validate? starttime: '28/02/2001', endtime: '29/02/2001').to be_falsey
+          expect(Event.validate? starttime: '2001/02/28', endtime: '2001/02/29').to be_falsey
+        end
+      end
+
+      context 'with an invalid month in endtime' do
+        it 'must return false' do
+          expect(Event.validate? starttime: '1999/01/19', endtime: '1999/99/20').to be_falsey
+          expect(Event.validate? starttime: '19/01/1999', endtime: '20/99/1999').to be_falsey
+        end
+      end
+
+      context 'with an invalid day in endtime' do
+        it 'must return false' do
+          expect(Event.validate? starttime: '1999/01/19', endtime: '1999/01/99').to be_falsey
+          expect(Event.validate? starttime: '19/01/1999', endtime: '99/01/1999').to be_falsey
+        end
+      end
+    end
+  end
 end
