@@ -37,6 +37,8 @@ gem 'csv'
 
 gem 'jquery-rails'
 
+gem 'chronic'
+
 group :development, :test do
   # Call 'byebug' anywhere in the code to stop execution and get a debugger console
   gem 'byebug', platforms: [:mri, :mingw, :x64_mingw]
@@ -45,6 +47,9 @@ group :development, :test do
   gem 'selenium-webdriver'
   gem 'rspec-rails'
   gem 'factory_bot_rails'
+
+  # Added at 2019-09-29 17:05:31 +0530 by vineeth:
+  gem "database_cleaner", "~> 1.7"
 end
 
 group :development do
@@ -61,6 +66,3 @@ gem 'tzinfo-data', platforms: [:mingw, :mswin, :x64_mingw, :jruby]
 
 # Added at 2019-09-28 17:43:47 +0530 by vineeth:
 gem "shoulda", "~> 3.6", :group => [:test]
-
-# Added at 2019-09-29 17:05:31 +0530 by vineeth:
-gem "database_cleaner", "~> 1.7"
