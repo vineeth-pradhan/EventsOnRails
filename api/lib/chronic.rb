@@ -2,6 +2,7 @@ module Chronic
   class Generic
     class << self
       def valid? *dates
+        return false if dates.empty?
         dates.all? { |_| is_it_valid? _ }
       end
 
@@ -15,9 +16,19 @@ module Chronic
 
   class Event < Generic
     class << self
-      def valid? from, to
-        return(Chronic.parse(from) < Chronic.parse(to)) if super(*[from, to])
+      def valid? *dates
+        return(Chronic.parse(from(dates)) < Chronic.parse(to(dates))) if dates.size == 2 && super(*[from(dates), to(dates)])
         false
+      end
+
+      private
+
+      def from dates
+        dates[0]
+      end
+
+      def to dates
+        dates[1]
       end
     end
   end
