@@ -1,12 +1,11 @@
 class EventsController < ApplicationController
   before_action :set_event, only: :show
+  before_action :validate_date, only: :index
 
   # GET /events
   # GET /events.json
   def index
-    @events = Event.valid_dates
-    @events = @events.after_startdate(params[:startdate]) if params[:startdate].present?
-    @events = @events.before_enddate(params[:enddate]) if params[:enddate].present?
+    @events = Event.fetch params[:from], params[:to]
   end
 
   # GET /events/1

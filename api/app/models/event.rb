@@ -26,8 +26,6 @@ class Event < ApplicationRecord
     end
   end
 
-  private
-
   def self.create_from_csv row
     event = new(
       title: row[0],
@@ -50,5 +48,10 @@ class Event < ApplicationRecord
 
   def timed_event?
     !self.allday
+  end
+
+  def fetch from, to
+    return Event.valid_dates.after_startdate(from).before_enddate(to) if Chronic::Event.valid? from, to
+    []
   end
 end
