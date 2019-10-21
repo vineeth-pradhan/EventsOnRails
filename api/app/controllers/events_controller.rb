@@ -1,6 +1,5 @@
 class EventsController < ApplicationController
   before_action :set_event, only: :show
-  before_action :validate_date, only: :index
 
   # GET /events
   # GET /events.json

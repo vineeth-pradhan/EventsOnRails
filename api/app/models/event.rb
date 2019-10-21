@@ -50,7 +50,7 @@ class Event < ApplicationRecord
     !self.allday
   end
 
-  def fetch from, to
+  def self.fetch from, to
     return Event.valid_dates.after_startdate(from).before_enddate(to) if Chronic::Event.valid? from, to
     []
   end
